@@ -96,16 +96,10 @@ async def next_question(ctx,Catagory,Value):
 
 
 
-# Bans users who say taiwan, and collects answers to questions
+# Collects answers to questions
 @bot.listen()
 async def on_message(message: discord.Message):
     global ans_list, accept_questions
-    if "taiwan" in message.content.lower() and str(message.author.id) not in {
-        "272342994999574528", #CY
-        "555457001522724864", #Flame
-    }:
-        author = message.author
-        await author.ban(reason="very bad citizen!")
     if accept_questions and message.content.lower().startswith("!") and message.author == currently_answering:
             ans_list.append(message.content)
 
