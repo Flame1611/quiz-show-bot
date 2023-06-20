@@ -9,6 +9,9 @@ class Teams():
             if not name:
                 name = f"Team {len(self.teams) + 1}"
             self.teams[id] = team(name= name, members= members)
+            return f'Team \"{self.teams[id].name}\" created successfully!'
+        elif id == self.host:
+            return 'This is the host server, unable to make team server'
 
     def remove_team(self, index: int = None) -> dict:
         self.teams.pop(index)
@@ -86,9 +89,10 @@ if __name__ == "__main__":
 
     @bot.hybrid_command(name="create-team-server")
     async def team_server(ctx):
+        await ctx.send(
         players.add_team(name= ctx.message.guild.name, 
                          members= [i.id for i in ctx.message.guild.members if not i.bot], 
                          id= ctx.message.guild.id)
-        await ctx.send(f'Team \"{players.teams[ctx.message.guild.id].name}\" created successfully!')
+        )
 
     bot.run(TOKEN)
